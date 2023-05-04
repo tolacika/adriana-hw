@@ -13,3 +13,89 @@ A feladat értékelése során vizsgált szempontok:
 - Hibatűrés
 
 ## Megoldás
+
+### Requirements
+- docker, docker-compose,
+- php ^8.1
+- Postman (exported collection at: `Adriana.postman_collection.json`)
+
+### Install and run the application
+
+```shell
+composer install && sail up -d
+```
+
+Jelenleg MongoDB-re van beállítva az adatbázis driver, de a Laravel sajátosságainak köszönhetően az adatbázis réteg bármikor cserélhető.
+
+### Endpoints
+
+#### List all clients
+
+GET: `/api/clients`
+
+Returns a collection of clients
+
+#### Show specific client
+
+GET: `/api/clients/{clientId}`
+
+Returns the requested client
+
+#### Create a new client
+
+PUT: `/api/clients/create`
+
+body params example:
+```json
+{
+    "name": "John Doe",
+    "address": "Address line",
+    "client_id": null,
+    "contracted_at": "2022-11-12"
+}
+```
+
+Returns a newly created client
+
+#### Create multiple clients
+
+PUT: `/api/clients/batch`
+
+body params example:
+```json
+{
+    "clients": [
+        {
+            "name": "Jane Doe",
+            "address": "Address line",
+            "client_id": "CL-000-012",
+            "contracted_at": "2022-11-12"
+        },
+        {...}
+    ]
+}
+```
+
+Returns a collection of newly created clients
+
+#### Update a client
+
+POST: `/api/clients/{clientId}`
+
+body params example:
+```json
+{
+    "name": "John LongerName Doe",
+    "address": "Address line2",
+    "client_id": null,
+    "contracted_at": "2022-11-12"
+}
+```
+
+Returns the updated client
+
+#### Delete a client
+
+DELETE: `/api/clients/{clientId}`
+
+Deletes the client and returns with the old (deleted) data
